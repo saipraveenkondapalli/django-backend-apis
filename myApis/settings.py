@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:1801',
+    'https://saipraveen.me'
     ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'myApis.wsgi.application'
+WSGI_APPLICATION = 'myApis.wsgi.app'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
