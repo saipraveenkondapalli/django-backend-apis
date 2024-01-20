@@ -1,3 +1,5 @@
 venv/
 !/cloudflare
 !/.env
+/.env
+/cloudflare

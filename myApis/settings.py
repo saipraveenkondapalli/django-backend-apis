@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '.vercel.app', '.saipraveen.me']
 
 # Application definition
 
@@ -49,7 +49,9 @@ INSTALLED_APPS = [
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:1801',
-    'https://saipraveen.me'
+    'https://saipraveen.me',
+    'https://www.saipraveen.me',
+    'https://preview.saipraveen.me',
     ]
 
 MIDDLEWARE = [
