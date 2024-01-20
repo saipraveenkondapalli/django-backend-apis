@@ -31,7 +31,6 @@ DEBUG = os.environ.get("DEBUG") == "True"
 
 ALLOWED_HOSTS = ['localhost:8000', '127.0.0.1:8000', '.vercel.app', '.saipraveen.me'] if not DEBUG else ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -53,10 +52,11 @@ CORS_ALLOWED_ORIGINS = [
     'https://saipraveen.me',
     'https://www.saipraveen.me',
     'https://preview.saipraveen.me',
-    ]
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+
 ]
 
 ROOT_URLCONF = 'myApis.urls'
@@ -138,10 +138,11 @@ USE_TZ = True
 # settings.py
 
 STATIC_URL = '/static/'
-if not DEBUG:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -159,7 +160,6 @@ EMAIL_HOST_PASSWORD = os.environ.get("MAIL_PASSWORD")
 DEFAULT_FROM_EMAIL = os.environ.get("MAIL_USERNAME")
 JOB_APPLICATION_RECEIVER = os.environ.get("JOB_APPLICATION_RECEIVER")
 CONTACT_RECEIVER = os.environ.get("CONTACT_RECEIVER")
-
 
 # cloud flare R2
 
