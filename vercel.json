@@ -1,14 +1,15 @@
 {
+  "version": 2,
   "builds": [
     {
-      "src": "myApis/wsgi.py",
+      "src": "myApis/index.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "myApis/wsgi.py"
+      "dest": "/"
     }
   ]
 }
