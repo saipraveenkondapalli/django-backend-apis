@@ -33,7 +33,7 @@
   }
 } (function (jQuery) {
   // This is needed so we can catch the AMD loader configuration and use it
-  // The inner file should be wrapped (by `banner.start.main_site`) in a function that
+  // The inner file should be wrapped (by `banner.start.js`) in a function that
   // returns the AMD loader references.
   var S2 =(function () {
   // Restore the Select2 AMD loader so it can be used
@@ -86,9 +86,9 @@ var requirejs, require, define;
             name = name.split('/');
             lastIndex = name.length - 1;
 
-            // If wanting node ID compatibility, strip .main_site from end
+            // If wanting node ID compatibility, strip .js from end
             // of IDs. Have to do this here, and not in nameToUrl
-            // because node allows either .main_site or non .main_site to map
+            // because node allows either .js or non .js to map
             // to same file.
             if (config.nodeIdCompat && jsSuffixRegExp.test(name[lastIndex])) {
                 name[lastIndex] = name[lastIndex].replace(jsSuffixRegExp, '');
@@ -99,7 +99,7 @@ var requirejs, require, define;
                 //Convert baseName to array, and lop off the last part,
                 //so that . matches that 'directory' and not name of the baseName's
                 //module. For instance, baseName of 'one/two/three', maps to
-                //'one/two/three.main_site', but we want the directory, 'one/two' for
+                //'one/two/three.js', but we want the directory, 'one/two' for
                 //this normalization.
                 normalizedBaseParts = baseParts.slice(0, baseParts.length - 1);
                 name = normalizedBaseParts.concat(name);

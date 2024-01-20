@@ -2,7 +2,7 @@
 /*
 SelectFilter2 - Turns a multiple-select box into a filter interface.
 
-Requires core.main_site and SelectBox.main_site.
+Requires core.js and SelectBox.js.
 */
 'use strict';
 {
