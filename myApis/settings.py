@@ -33,6 +33,8 @@ DEBUG = os.environ.get("DEBUG") == "True"
 
 ALLOWED_HOSTS = ['localhost:8000', '127.0.0.1:8000', '.vercel.app', '.saipraveen.me', '.azurewebsites.net'] if not (
     DEBUG) else ['*']
+CSRF_TRUSTED_ORIGINS = ALLOWED_HOSTS
+
 
 # Application definition
 
