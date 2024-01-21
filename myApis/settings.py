@@ -31,7 +31,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG") == "True"
 
-ALLOWED_HOSTS = ['localhost:8000', '127.0.0.1:8000', '.vercel.app', '.saipraveen.me', 'django-apis.azurewebsites.net'] if not DEBUG else ['*']
+ALLOWED_HOSTS = ['localhost:8000', '127.0.0.1:8000', '.vercel.app', '.saipraveen.me', '.azurewebsites.net'] if not (
+    DEBUG) else ['*']
 
 # Application definition
 
