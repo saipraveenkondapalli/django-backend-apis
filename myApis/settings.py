@@ -200,3 +200,7 @@ cloudinary.config(
     api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
     secure=True
 )
+
+# Session
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
