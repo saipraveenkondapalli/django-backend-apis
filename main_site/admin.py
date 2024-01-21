@@ -2,12 +2,23 @@ import random
 import string
 
 from django import forms
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.urls import reverse
 from django_countries import countries
+from django.contrib.auth.hashers import check_password
 
-from .models import CompanyTrack, License, Api, Website, Resume, MainSiteContact
+from .forms import BlogForm, BlogAddForm, AuthenticateWithPasswordForm
+from .models import (
+    CompanyTrack,
+    License,
+    Api,
+    Website,
+    Resume,
+    MainSiteContact,
+    Blog
+)
 
 
 class CompanyTrackForm(forms.ModelForm):
@@ -85,9 +96,41 @@ class ResumeAdmin(admin.ModelAdmin):
         super().delete_queryset(request, queryset)
 
 
+class BlogAdmin(admin.ModelAdmin):
+    form = BlogForm
+    add_form = BlogAddForm
+
+    def get_form(self, request, obj=None, **kwargs):
+        if obj is None:
+            return self.add_form
+        return super().get_form(request, obj, **kwargs)
+
+    def save_model(self, request, obj, form, change):
+        if obj.approved:
+            obj.delete_unused_images()
+        super().save_model(request, obj, form, change)
+
+    def render_change_form(self, request, context, *args, **kwargs):
+        if context['original'] is not None:
+            context['adminform'].form.fields['content'].widget.attrs.update({
+                'blog_id': context['original'].id
+            })
+        return super().render_change_form(request, context, args, kwargs)
+
+    def delete_model(self, request, obj):
+        obj.delete_images(delete_folder=True)
+        super().delete_model(request, obj)
+
+    def delete_queryset(self, request, queryset):
+        for obj in queryset:
+            obj.delete_images(delete_folder=True)
+        super().delete_queryset(request, queryset)
+
+
 admin.site.register(License, LicenseAdmin)
 admin.site.register(Website, WebsiteAdmin)
 admin.site.register(CompanyTrack, CompanyTrackAdmin)
 admin.site.register(Api)
 admin.site.register(Resume, ResumeAdmin)
 admin.site.register(MainSiteContact)
+admin.site.register(Blog, BlogAdmin)

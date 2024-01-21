@@ -16,6 +16,9 @@ django-countries = "*"
 requests = "*"
 whitenoise = "*"
 gunicorn = "*"
+django-ckeditor-5 = "*"
+cloudinary = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 

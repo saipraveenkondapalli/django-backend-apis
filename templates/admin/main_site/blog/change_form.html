@@ -1,0 +1,21 @@
+{% extends "admin/change_form.html" %}
+{% block admin_change_form_document_ready %}
+
+    <style>
+        .ck-editor__editable[role="textbox"] {
+            min-height: 350px;
+            color: black;
+        }
+    </style>
+
+    <script>
+        ClassicEditor.create(document.getElementById("id_content"), {
+            simpleUpload: {
+                // The URL that the images are uploaded to.
+                uploadUrl: '/main_site/upload_image/?blog_id=' + document.getElementById("id_content").getAttribute("blog_id"),
+                // Enable the XMLHttpRequest.withCredentials property.
+                withCredentials: true,
+            }
+        });
+    </script>
+{% endblock %}

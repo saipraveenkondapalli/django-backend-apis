@@ -1,11 +1,12 @@
 import json
 
-from django.http import JsonResponse, FileResponse
+import cloudinary.uploader
+from django.http import FileResponse, JsonResponse
 from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from main_site.decorator import check_license
-from main_site.models import Website, CompanyTrack, Resume
+from main_site.models import Website, CompanyTrack, Resume, BlogImage, Blog
 from main_site.utils import get_ip_address_data
 from .models import MainSiteContact
 from .utils import EmailHandler
@@ -73,3 +74,27 @@ def contact_send_email(request):
     except Exception as _:
         return HttpResponse('error')
     return HttpResponse('success')
+
+
+@csrf_exempt
+def upload_image(request):
+    if request.method == 'POST':
+        blog_id = request.GET.get('blog_id')
+        blog = Blog.objects.get(id=blog_id) if blog_id else None
+        if not blog:
+            return JsonResponse({'error': 'Invalid blog id'})
+
+        file = request.FILES['upload']
+        folder = f'blog/{blog_id}'
+        upload_result = cloudinary.uploader.upload(file, folder=folder)
+        BlogImage.objects.create(
+            blog=blog,
+            public_id=upload_result['public_id'],
+            url=upload_result['url']
+        )
+
+        return JsonResponse({
+            'url': upload_result['url'],
+        })
+
+    return JsonResponse({'error': 'Invalid method'})

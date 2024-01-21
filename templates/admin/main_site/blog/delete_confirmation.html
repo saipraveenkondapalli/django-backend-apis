@@ -1,0 +1,9 @@
+{% extends "admin/delete_confirmation.html" %}
+{% block content %}
+    <form action="" method="post">{% csrf_token %}
+        <p>Are you sure you want to delete the "{{ object }}"?</p>
+        <p>To confirm deletion, please enter your password:</p>
+        {{ form.as_p }}
+        <input type="submit" value="Yes, I'm sure">
+    </form>
+{% endblock %}

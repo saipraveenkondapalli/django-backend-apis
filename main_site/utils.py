@@ -40,3 +40,6 @@ class EmailHandler:
         subject = f"Contact Email - {contact.name}"
         message = render_to_string('main_site/email/contact.html', {'contact': contact})
         self.send_email(subject, self.job_application_receiver, message)
+
+
+
