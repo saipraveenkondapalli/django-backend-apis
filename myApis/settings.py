@@ -52,12 +52,7 @@ INSTALLED_APPS = [
 
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:1801',
-    'https://saipraveen.me',
-    'https://www.saipraveen.me',
-    'https://preview.saipraveen.me',
-]
+CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS").split(",")
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
