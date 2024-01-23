@@ -5,6 +5,6 @@ urlpatterns = [
     path('copy_page/<uuid:pk>/', copy_page, name='copy_page'),
     path('web/', web, name='web'),
 
-    path('job/track/', job_application, name='test_job_application'),
+    path('job/track/', job_application, name='job_application'),
     path('upload_image/', upload_image, name='upload_image'),
 ]

@@ -1,6 +1,8 @@
 import json
 
 import cloudinary.uploader
+import django.utils.log
+from django.core import serializers
 from django.http import FileResponse, JsonResponse
 from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -40,7 +42,10 @@ def job_application(request):
     company.opened = True
     company.save()
     EmailHandler().send_company_track_alert(company)
-    return HttpResponse('success')
+    #     return entire model as json
+    company_json = serializers.serialize('json', [company, ])
+
+    return HttpResponse(company_json, content_type='application/json')
 
 
 def resume(request):
@@ -70,7 +75,12 @@ def contact_send_email(request):
             email=data.get('email'),
             message=data.get('message'),
         )
-        EmailHandler().send_contact_email(new_contact)
+        try:
+            EmailHandler().send_contact_email(new_contact)
+        except Exception as _:
+            django.utils.log.log_response("Error sending email"
+                                          " to contact: " + str(new_contact.email))
+
     except Exception as _:
         return HttpResponse('error')
     return HttpResponse('success')

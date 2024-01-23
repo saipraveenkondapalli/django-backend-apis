@@ -1,15 +1,12 @@
-import random
 import string
 
 from django import forms
-from django.contrib import admin, messages
+from django.contrib import admin
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
 from django.urls import reverse
 from django_countries import countries
-from django.contrib.auth.hashers import check_password
 
-from .forms import BlogForm, BlogAddForm, AuthenticateWithPasswordForm
+from .forms import BlogForm, BlogAddForm
 from .models import (
     CompanyTrack,
     License,
@@ -29,7 +26,7 @@ class CompanyTrackForm(forms.ModelForm):
     class Meta:
         model = CompanyTrack
         fields = '__all__'
-        exclude = ['opened']
+        # exclude = ['opened']
 
     class Media:
         model = CompanyTrack
