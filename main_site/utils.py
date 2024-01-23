@@ -34,9 +34,9 @@ class EmailHandler:
                 fail_silently=False,
             )
         except smtplib.SMTPDataError as e:
-            django.utils.log.log_response(f"Error sending email: {e}")
+            pass
         except Exception as e:
-            django.utils.log.log_response(f"Error sending email: {e}")
+            pass
             raise Exception('Error sending email')
 
     def send_company_track_alert(self, company):
