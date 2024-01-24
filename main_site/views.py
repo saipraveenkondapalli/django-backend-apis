@@ -15,11 +15,24 @@ from .utils import EmailHandler
 
 
 def copy_page(request, pk):
+    """
+    Render a page with a copy of the ID.
+
+    :param request: The HTTP request.
+    :param pk: The primary key of the object to copy.
+    :return: Rendered HTML page.
+    """
     return render(request, 'admin/copy_id.html', {'pk': pk})
 
 
 @check_license('web')
 def web(request):
+    """
+    Handle a web request and increment the total visits of the website and location.
+
+    :param request: The HTTP request.
+    :return: JsonResponse with a success message.
+    """
     website = Website.objects.get(license_key=request.GET.get('id'))
     website.total_visits += 1
 
@@ -37,6 +50,12 @@ def web(request):
 
 
 def job_application(request):
+    """
+    Handle a job application request and send an email alert.
+
+    :param request: The HTTP request.
+    :return: HttpResponse with the serialized company object.
+    """
     id = request.GET.get('id')
     company = CompanyTrack.objects.get(tracker_id=id)
     company.opened = True
@@ -49,6 +68,12 @@ def job_application(request):
 
 
 def resume(request):
+    """
+    Handle a resume request.
+
+    :param request: The HTTP request.
+    :return: FileResponse with the resume file.
+    """
     tracker_id = request.GET.get('id')
     if tracker_id:
         company = CompanyTrack.objects.get(tracker_id=tracker_id)
@@ -57,6 +82,12 @@ def resume(request):
 
 
 def main_resume(request):
+    """
+    Handle a main resume request.
+
+    :param request: The HTTP request.
+    :return: FileResponse with the main resume file.
+    """
     file = Resume.objects.first()
     if not file:
         return HttpResponse('No resume found')
@@ -67,6 +98,12 @@ def main_resume(request):
 
 @csrf_exempt
 def contact_send_email(request):
+    """
+    Handle a contact send email request.
+
+    :param request: The HTTP request.
+    :return: HttpResponse with a success or error message.
+    """
     data = json.loads(request.body)
 
     try:
@@ -88,6 +125,12 @@ def contact_send_email(request):
 
 @csrf_exempt
 def upload_image(request):
+    """
+    Handle an upload image request.
+
+    :param request: The HTTP request.
+    :return: JsonResponse with the image URL or an error message.
+    """
     if request.method == 'POST':
         blog_id = request.GET.get('blog_id')
         blog = Blog.objects.get(id=blog_id) if blog_id else None
