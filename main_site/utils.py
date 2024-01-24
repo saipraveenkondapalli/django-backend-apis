@@ -27,10 +27,11 @@ class EmailHandler:
     def send_email(self, subject, receiver, message):
         try:
             send_mail(
-                subject,
-                message,
-                self.sender,
-                [receiver],
+                subject=subject,
+                message='',
+                html_message=message,
+                from_email=self.sender,
+                recipient_list=[receiver],
                 fail_silently=False,
             )
         except smtplib.SMTPDataError as e:
