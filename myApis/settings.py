@@ -9,13 +9,14 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import mimetypes
 import os
 from pathlib import Path
 
+import cloudinary
 import sentry_sdk
 from django.template.context_processors import media
 from dotenv import load_dotenv
-import cloudinary
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -199,3 +200,6 @@ cloudinary.config(
 # Session
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+# Update Mime type for JS files
+mimetypes.add_type("text/javascript", ".js", True)
