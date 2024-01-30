@@ -1,7 +1,6 @@
 import random
 import string
 
-
 from django import forms
 from django.contrib import admin
 from django.http import HttpResponseRedirect

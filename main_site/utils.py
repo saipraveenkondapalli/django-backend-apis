@@ -9,7 +9,6 @@ from .models import MainSiteContact
 
 
 def get_ip_address_data(ip_add):
-    ip_add = '223.196.171.245'
     url = f'http://ip-api.com/json/{ip_add}'
     data = requests.get(url).json()
     if data:
