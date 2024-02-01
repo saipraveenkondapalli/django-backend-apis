@@ -32,10 +32,11 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG") == "True"
 
-ALLOWED_HOSTS = ['localhost:8000', '127.0.0.1:8000', '.vercel.app', '.saipraveen.me', '.azurewebsites.net'] if not (
+ALLOWED_HOSTS = ['localhost:8000', 'localhost:1801', '127.0.0.1:8000', '.vercel.app', '.saipraveen.me',
+                 '.azurewebsites.net'] if not (
     DEBUG) else ['*']
 CSRF_TRUSTED_ORIGINS = ['https://saipraveen.me', 'https://www.saipraveen.me', 'https://preview.saipraveen.me',
-                        'https://django-apis.azurewebsites.net']
+                        'https://django-apis.azurewebsites.net', 'http://localhost:1801']
 
 # Application definition
 
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_select2',
+    'rest_framework',
     'corsheaders',
     'main_site',
     'storages',
@@ -56,6 +58,7 @@ INSTALLED_APPS = [
 CORS_ALLOWED_ORIGINS = os.environ.get("CORS_ALLOWED_ORIGINS").split(",")
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -64,8 +67,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-
 ]
 
 ROOT_URLCONF = 'myApis.urls'

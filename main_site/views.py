@@ -6,6 +6,9 @@ from django.core import serializers
 from django.http import FileResponse, JsonResponse
 from django.shortcuts import render, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from main_site.decorator import check_license
 from main_site.models import Website, CompanyTrack, Resume, BlogImage, Blog
@@ -151,3 +154,39 @@ def upload_image(request):
         })
 
     return JsonResponse({'error': 'Invalid method'})
+
+
+class BlogListView(APIView):
+    """
+    List all blogs.
+    """
+
+    def get(self, request, format=None):
+        blogs = Blog.objects.all().order_by('-created_date')
+        return Response({
+            'blogs': [{
+                'title': blog.title,
+                'content': blog.content,
+                'slug': blog.slug,
+                'created_date': blog.created_date,
+                'approved': blog.approved,
+                'active': blog.active,
+            } for blog in blogs]
+        })
+
+
+class BlogDetailView(APIView):
+    """
+    Retrieve a blog instance.
+    """
+
+    def get(self, request, slug, format=None):
+        try:
+            blog = Blog.objects.get(slug=slug)
+            return Response({
+                'title': blog.title,
+                'content': blog.content,
+                'created_at': blog.created_date,
+            })
+        except Blog.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
